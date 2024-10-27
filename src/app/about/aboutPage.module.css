@@ -1,0 +1,54 @@
+/* aboutPage.module.css */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  background-color: #1d3557;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.textSection {
+  flex: 1;
+  min-width: 60%;
+}
+
+.textSection h2 {
+  color: #e63946;
+  margin-bottom: 10px;
+}
+
+.textSection p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.textSection ul {
+  margin-left: 20px;
+  list-style: square;
+}
+
+.textSection ul li {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.closing {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 30px;
+}
