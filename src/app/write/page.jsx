@@ -9,17 +9,33 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
-} from "@/utils/firebase"; // Import Firebase storage utilities safely
+} from "@/utils/firebase"; // Firebase storage utilities
 import "react-quill/dist/quill.bubble.css";
 import Image from "next/image";
 import styles from "./writePage.module.css";
 
-// Dynamically import ReactQuill to avoid SSR issues
+// Dynamically import ReactQuill to prevent SSR issues
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const WritePage = () => {
-  const { status } = useSession();
-  const router = useRouter();
+  // Wrap useRouter and useSession in try-catch or error checks
+  let router;
+  try {
+    router = useRouter();
+  } catch (error) {
+    console.error("Error using useRouter:", error);
+    router = null; // Default value in case of failure
+  }
+
+  let session;
+  try {
+    session = useSession();
+  } catch (error) {
+    console.error("Error using useSession:", error);
+    session = { status: "unauthenticated" }; // Default value in case of failure
+  }
+
+  const { status } = session;
 
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
@@ -29,7 +45,7 @@ const WritePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  // Ensure file upload logic only runs on the client side
+  // Ensure file upload logic runs only in the browser
   useEffect(() => {
     if (typeof window === "undefined" || !file) return;
 
@@ -62,10 +78,15 @@ const WritePage = () => {
     uploadFile();
   }, [file]);
 
-  if (status === "loading")
+  // Handle loading and unauthenticated states safely
+  if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
+  }
+  
   if (status === "unauthenticated") {
-    router.push("/");
+    if (router) {
+      router.push("/");
+    }
     return null;
   }
 
@@ -98,7 +119,9 @@ const WritePage = () => {
 
       if (res.ok) {
         const data = await res.json();
-        router.push(`/posts/${data.slug}`);
+        if (router) {
+          router.push(`/posts/${data.slug}`);
+        }
       } else {
         console.error("Failed to create post:", res.statusText);
       }
