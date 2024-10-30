@@ -9,33 +9,18 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
-} from "@/utils/firebase"; // Firebase storage utilities
+} from "@/utils/firebase";
 import "react-quill/dist/quill.bubble.css";
 import Image from "next/image";
 import styles from "./writePage.module.css";
 
-// Dynamically import ReactQuill to prevent SSR issues
+// Dynamically import ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const WritePage = () => {
-  // Wrap useRouter and useSession in try-catch or error checks
-  let router;
-  try {
-    router = useRouter();
-  } catch (error) {
-    console.error("Error using useRouter:", error);
-    router = null; // Default value in case of failure
-  }
-
-  let session;
-  try {
-    session = useSession();
-  } catch (error) {
-    console.error("Error using useSession:", error);
-    session = { status: "unauthenticated" }; // Default value in case of failure
-  }
-
-  const { status } = session;
+  // Call hooks unconditionally at the top
+  const router = useRouter();
+  const { status } = useSession();
 
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
@@ -45,9 +30,16 @@ const WritePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  // Ensure file upload logic runs only in the browser
+  // Handle redirect for unauthenticated users
   useEffect(() => {
-    if (typeof window === "undefined" || !file) return;
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
+  // File upload logic
+  useEffect(() => {
+    if (!file) return;
 
     const uploadFile = () => {
       const name = `${new Date().getTime()}-${file.name}`;
@@ -78,16 +70,8 @@ const WritePage = () => {
     uploadFile();
   }, [file]);
 
-  // Handle loading and unauthenticated states safely
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
-  }
-  
-  if (status === "unauthenticated") {
-    if (router) {
-      router.push("/");
-    }
-    return null;
   }
 
   const slugify = (str) =>
@@ -119,9 +103,7 @@ const WritePage = () => {
 
       if (res.ok) {
         const data = await res.json();
-        if (router) {
-          router.push(`/posts/${data.slug}`);
-        }
+        router.push(`/posts/${data.slug}`);
       } else {
         console.error("Failed to create post:", res.statusText);
       }
