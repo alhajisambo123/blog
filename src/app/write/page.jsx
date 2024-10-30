@@ -84,4 +84,92 @@ const WritePage = () => {
     try {
       const res = await fetch("/api/posts", {
         method: "POST",
-        h
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          desc: value,
+          img: media,
+          slug: slugify(title),
+          catSlug,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        router.push(`/posts/${data.slug}`);
+      } else {
+        console.error("Failed to create post:", res.statusText);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <input
+        type="text"
+        placeholder="Title"
+        className={styles.input}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <select
+        className={styles.select}
+        value={catSlug}
+        onChange={(e) => setCatSlug(e.target.value)}
+      >
+        <option value="RT">RT</option>
+        <option value="MedLab">MedLab</option>
+        <option value="Physio">Physio</option>
+        <option value="OT">OT</option>
+        <option value="Radio">Radio</option>
+        <option value="Diet">Diet</option>
+      </select>
+      <div className={styles.editor}>
+        <button className={styles.button} onClick={() => setFile(null)}>
+          {/* <Image src="/plus.png" alt="Add Media" width={16} height={16} /> */}
+        </button>
+        <input
+          type="file"
+          id="fileInput"
+          style={{ display: "none" }}
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+        <label htmlFor="fileInput" className={styles.addButton}>
+          {/* <Image src="/image.png" alt="Upload Image" width={16} height={16} /> */}
+        </label>
+
+        <ReactQuill
+          className={styles.textArea}
+          theme="bubble"
+          value={value}
+          onChange={setValue}
+          placeholder="Tell your story..."
+        />
+      </div>
+
+      {uploadProgress > 0 && (
+        <div className={styles.progressBar}>
+          <div
+            className={styles.progress}
+            style={{ width: `${uploadProgress}%` }}
+          />
+        </div>
+      )}
+
+      <button
+        className={styles.publish}
+        onClick={handleSubmit}
+        disabled={isSubmitting || !title || !value || !media}
+      >
+        {isSubmitting ? "Publishing..." : "Publish"}
+      </button>
+    </div>
+  );
+};
+
+export default WritePage;
