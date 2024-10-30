@@ -3,16 +3,18 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import {
-  storage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "@/utils/firebase"; // Import from firebase.js
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.bubble.css";
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import styles from "./writePage.module.css";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.bubble.css";
+
+let storage, ref, uploadBytesResumable, getDownloadURL;
+
+if (typeof window !== "undefined") {
+  const firebase = require("@/utils/firebase");
+  ({ storage, ref, uploadBytesResumable, getDownloadURL } = firebase);
+}
 
 const WritePage = () => {
   const { status } = useSession();
@@ -126,9 +128,6 @@ const WritePage = () => {
         <option value="Diet">Diet</option>
       </select>
       <div className={styles.editor}>
-        <button className={styles.button} onClick={() => setFile(null)}>
-          {/* <Image src="/plus.png" alt="Add Media" width={16} height={16} /> */}
-        </button>
         <input
           type="file"
           id="fileInput"
@@ -136,7 +135,7 @@ const WritePage = () => {
           onChange={(e) => setFile(e.target.files[0])}
         />
         <label htmlFor="fileInput" className={styles.addButton}>
-          {/* <Image src="/image.png" alt="Upload Image" width={16} height={16} /> */}
+          Upload Image
         </label>
 
         <ReactQuill
