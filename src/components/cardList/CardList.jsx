@@ -10,6 +10,7 @@ const getData = async (page, cat) => {
     {
       cache: "no-store",
     }
+    
   );
 
   if (!res.ok) {
