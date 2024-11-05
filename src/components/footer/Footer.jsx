@@ -64,17 +64,17 @@ const Footer = () => {
         </div>
         <div className={styles.list}>
           <span className={styles.listTitle}>Departments</span>
-          <Link href="http://localhost:3000/blog?cat=OT">OT</Link>
-          <Link href="http://localhost:3000/blog?cat=Physio">Physio</Link>
-          <Link href="http://localhost:3000/blog?cat=Diet">Diet</Link>
+          <Link href="https://blog-one-blue-53.vercel.app//blog?cat=OT">OT</Link>
+          <Link href="https://blog-one-blue-53.vercel.app//blog?cat=Physio">Physio</Link>
+          <Link href="https://blog-one-blue-53.vercel.app//blog?cat=Diet">Diet</Link>
         </div>
         <div className={styles.list}>
           {/* <span className={styles.listTitle}>Social</span> */}
           {/* <Link href="/">Facebook</Link>
           <Link href="/">Instagram</Link> */}
-          <Link href="/http://localhost:3000/blog?cat=RT">RT</Link>
-          <Link href="http://localhost:3000/blog?cat=MedLab">MedLab</Link>
-          <Link href="http://localhost:3000/blog?cat=Radio">Radio</Link>
+          <Link href="https://blog-one-blue-53.vercel.app//blog?cat=RT">RT</Link>
+          <Link href="https://blog-one-blue-53.vercel.app//blog?cat=MedLab">MedLab</Link>
+          <Link href="https://blog-one-blue-53.vercel.app//blog?cat=Radio">Radio</Link>
 
           {/* <Link href="/">Tiktok</Link> */}
         </div>
