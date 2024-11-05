@@ -86,7 +86,7 @@ const MenuPosts = ({ withImage }) => {
           </div>
         )}
         <div className={styles.textContainer}>
-          <span className={`${styles.category} ${styles.culture}`}>OT</span>
+          <span className={`${styles.category} ${styles.culture}`}>RT</span>
           <h3 className={styles.postTitle}>
       Discover blogs tailored for Respiratory Therapy professionals.
           </h3>
