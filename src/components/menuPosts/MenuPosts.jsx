@@ -24,40 +24,8 @@ const MenuPosts = ({ withImage }) => {
         </div>
       </Link>
 
-      <Link href="/blog?cat=OT" className={styles.item}>
-        {withImage && (
-          <div className={styles.imageContainer}>
-            <Image src="/p1.jpeg" alt="" fill className={styles.image} />
-          </div>
-        )}
-        <div className={styles.textContainer}>
-          <span className={`${styles.category} ${styles.culture}`}>OT</span>
-          <h3 className={styles.postTitle}>
-            Discover blogs tailored for Occupational Therapy professionals.
-          </h3>
-          <div className={styles.detail}>
-            <span className={styles.username}>Farouk</span>
-            <span className={styles.date}> - 10.03.2023</span>
-          </div>
-        </div>
-      </Link>
-       <Link href="/blog?cat=OT" className={styles.item}>
-        {withImage && (
-          <div className={styles.imageContainer}>
-            <Image src="/p1.jpeg" alt="" fill className={styles.image} />
-          </div>
-        )}
-        <div className={styles.textContainer}>
-          <span className={`${styles.category} ${styles.culture}`}>OT</span>
-          <h3 className={styles.postTitle}>
-            Discover blogs tailored for Occupational Therapy professionals.
-          </h3>
-          <div className={styles.detail}>
-            <span className={styles.username}>Farouk</span>
-            <span className={styles.date}> - 10.03.2023</span>
-          </div>
-        </div>
-      </Link>
+     
+
        <Link href="/blog?cat=OT" className={styles.item}>
         {withImage && (
           <div className={styles.imageContainer}>
@@ -107,6 +75,23 @@ const MenuPosts = ({ withImage }) => {
           </h3>
           <div className={styles.detail}>
             <span className={styles.username}>David</span>
+            <span className={styles.date}> - 10.03.2023</span>
+          </div>
+        </div>
+      </Link>
+             <Link href="/blog?cat=RT" className={styles.item}>
+        {withImage && (
+          <div className={styles.imageContainer}>
+            <Image src="/p1.jpeg" alt="" fill className={styles.image} />
+          </div>
+        )}
+        <div className={styles.textContainer}>
+          <span className={`${styles.category} ${styles.culture}`}>OT</span>
+          <h3 className={styles.postTitle}>
+      Discover blogs tailored for Respiratory Therapy professionals.
+          </h3>
+          <div className={styles.detail}>
+            <span className={styles.username}>Farouk</span>
             <span className={styles.date}> - 10.03.2023</span>
           </div>
         </div>
