@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   gap: 50px;
+  flex-direction: row; /* Default is side-by-side for larger screens */
 }
 
 .imageContainer {
@@ -43,8 +44,14 @@
   padding: 2px 0px;
 }
 
-@media screen and (max-width: 1280px) {
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack image above text on small screens */
+  }
   .imageContainer {
-    display: none;
+    display: block; /* Show image on small screens */
+    width: 100%;
+    height: auto;
   }
 }
